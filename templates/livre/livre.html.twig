@@ -1,0 +1,116 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}{{ livre.titre }}{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mt-3">{{ livre.titre }}</h1>
+    <div class="container">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Livre</button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Résumé</button>
+                    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Commentaire</button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="row mx-auto">
+                        <div class="col-md-3">
+                            <img src="{{ asset('images/livres/' ~ livre.image) }}" alt="" class="img-fluid">
+                        </div>
+                        <div class="col-md-5">
+                            <h3><b>Titre : </b>{{ livre.titre }}</h3>
+                            <p><b>Auteur : </b>{{ livre.auteur }}</p>
+                            <p><b>Maison d'édition : </b>{{ livre.editeur }}</p>
+                            <p><b>Code : </b>{{ livre.code }}</p>
+                            <p><b>Prix TTC : </b>{{ livre.prix }} €</p>
+                            <div class="list-group">
+                                <a class="panier btn btn-dark" href="{{ path('add', {'id': livre.id}) }}"><i class="fas fa-cart-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="col-md-6 mx-auto">
+                        <p><b>Resumé : </b>{{ livre.resume|raw }}</p>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    <div class="col-md-10 mx-auto">
+                        <h1>Liste des commentaires</h1>
+                        {% for commentaire in livre.commentaires %}
+                            {% if commentaire.reponse == null %}
+                                    <p>Publié par {{ commentaire.pseudo }} le {{ commentaire.createdAt|date("d/m/Y H:i") }}</p>
+                                    <p>{{ commentaire.contenu|raw }}</p>
+                                    <p><a class="btn btn-secondary btn-sm" href="#ajout" data-reponse data-id="{{ commentaire.id }}">Répondre</a></p>
+                                {% for result in commentaire.results %}
+                                    <p>Réponse publié par {{ result.pseudo }} le {{ result.createdAt|date("d/m/Y H:i") }}</p>
+                                    <p>{{ result.content|raw }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+
+                        <div class="mt-4" id="ajout">
+                            <h1>Ajouter un commentaire</h1>
+                            {{ form_start(form) }}
+                                <div class="row mb-3">
+                                    <div class="col-md-6">{{ form_row(form.pseudo) }}</div>
+                                    <div class="col-md-6">{{ form_row(form.email) }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-12">{{ form_row(form.contenu) }}</div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">{{ form_row(form.cgu) }}</div>
+                                    <div class="col-md-6">{{ form_row(form.reponse) }}</div>
+                                </div>
+                            {{ form_widget(form) }}
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        window.onload = () => {
+        const etoiles = document.querySelectorAll(".fa-star");
+        const note = document.getElementById("note");
+        for(etoile of etoiles) {
+            etoile.addEventListener("mouseover", function(){
+                reinitialisation();
+                this.style.color = "#FF8F00";
+
+                let eltPrecedent = this.previousElementSibling;
+                while(eltPrecedent) {
+                eltPrecedent.style.color="#FF8F00";
+                eltPrecedent = eltPrecedent.previousElementSibling;
+                }
+            });
+
+            etoile.addEventListener("click", function(){
+            note.value = this.dataset.id;
+            });
+            etoile.addEventListener("mouseout", function(){
+            reinitialisation(note.value) 
+            });
+        }
+        function reinitialisation(valeur = 0) {
+            for(etoile of etoiles) {
+                if(etoile.dataset.id > valeur) {
+                    etoile.style.color = "black";
+                } else{
+                    etoile.style.color = "#FF8F00";
+                }
+            }
+        }
+        document.querySelectorAll("[data-reponse]").forEach(element => {
+            element.addEventListener("click", function(){
+                document.getElementById("comments_reponseid").value = this.dataset.id;
+                //console.log(this);
+            });
+        });
+    }
+    </script>
+{% endblock %}

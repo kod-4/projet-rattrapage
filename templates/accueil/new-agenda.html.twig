@@ -1,0 +1,28 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}S'inscrire{% endblock %}
+
+{% block body %}
+    <div class="col-md-8 mx-auto mt-5">
+        {{ form_start(form) }}
+            <div class="row mb-3">
+                <div class="col-md-6">{{ form_row(form.sujet) }}</div>
+                <div class="col-md-6">{{ form_row(form.home) }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">{{ form_row(form.debut) }}</div>
+                <div class="col-md-6">{{ form_row(form.fin) }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-4">{{ form_row(form.imageFile) }}</div>
+                <div class="col-md-8">{{ form_row(form.description) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">{{ form_row(form.journee) }}</div>
+            </div>
+        {{ form_widget(form) }}
+            <button class="btn btn-outline-primary mt-2">{{ button_label|default('Enregistrer') }}</button>
+        {{ form_end(form) }}
+        <a class="btn btn-outline-secondary mt-2" href="{{ path('rencontres') }}">Retour</a>
+    </div>
+{% endblock %}

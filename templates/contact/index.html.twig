@@ -1,0 +1,25 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    <div class="col-md-8 mx-auto mt-5">
+    <h1 class="text-center">Contact</h1>
+        {{ form_start(form) }}
+            <div class="row mb-3">
+                <div class="col-md-6">{{ form_row(form.nom) }}</div>
+                <div class="col-md-6">{{ form_row(form.prenom) }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">{{ form_row(form.sujet) }}</div>
+                <div class="col-md-6">{{ form_row(form.email) }}</div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">{{ form_row(form.message) }}</div>
+            </div>
+        {{ form_widget(form) }}
+            <button class="btn btn-outline-primary mt-2">{{ button_label|default('Envoyer') }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

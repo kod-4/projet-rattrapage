@@ -1,0 +1,38 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center">Agenda</h1>
+    <table class="table table-striped ">
+        <thead>
+            <tr>
+                <th>Sujet</th>
+                <th>Debut</th>
+                <th>Fin</th>
+                <th>Description</th>
+                <th>Journee</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for agenda in agendas %}
+            <tr>
+                <td class="car-text">{{ agenda.sujet }}</td>
+                <td class="car-text">{{ agenda.debut ? agenda.debut|date('Y-m-d H:i') : '' }}</td>
+                <td class="car-text">{{ agenda.fin ? agenda.fin|date('Y-m-d H:i') : '' }}</td>
+                <td class="car-text">{{ agenda.description }}</td>
+                <td class="car-text">{{ agenda.journee ? 'OUI' : 'NON' }}</td>
+                <td><img src="{{ asset('images/agenda/' ~ agenda.image) }}" alt="{{ agenda.sujet }}" class="img-list"></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-outline-primary" href="{{ path('new_agenda') }}">S'inscrire</a>
+</div>
+{% endblock %}

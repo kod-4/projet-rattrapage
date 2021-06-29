@@ -1,0 +1,21 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+    <div class="col-md-8 mx-auto mt-5">
+        <h1 class="text-center">S'inscrire</h1>
+        {{ form_start(form) }}
+            <div class="row mb-3">
+                <div class="col-md-6">{{ form_row(form.nom) }}</div>
+                <div class="col-md-6">{{ form_row(form.username) }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">{{ form_row(form.password) }}</div>
+                <div class="col-md-6">{{ form_row(form.email) }}</div>
+            </div>
+        {{ form_widget(form) }}
+            <button class="btn btn-outline-primary mt-2">{{ button_label|default('S'inscrire') }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

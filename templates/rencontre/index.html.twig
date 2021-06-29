@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rencontre index{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center">Rencontre</h1>
+    <table class="table table-dark table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Journee</th>
+                <th>TextColor</th>
+                <th>BackgroundColor</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rencontre in rencontres %}
+            <tr>
+                <td>{{ rencontre.id }}</td>
+                <td>{{ rencontre.title }}</td>
+                <td>{{ rencontre.description }}</td>
+                <td>{{ rencontre.start ? rencontre.start|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ rencontre.end ? rencontre.end|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ rencontre.journee ? 'Yes' : 'No' }}</td>
+                <td>{{ rencontre.textColor }}</td>
+                <td>{{ rencontre.backgroundColor }}</td>
+                <td>{{ rencontre.image }}</td>
+                <td>
+                    <a class="link-secondary me-2" href="{{ path('rencontre_show', {'id': rencontre.id}) }}"><i class="fas fa-eye"></i></a>
+                    <a href="{{ path('rencontre_edit', {'id': rencontre.id}) }}"><i class="fas fa-edit"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-outline-primary mt-2" href="{{ path('rencontre_new') }}">Ajouter</a>
+</div>
+{% endblock %}

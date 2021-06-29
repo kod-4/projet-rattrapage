@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Agenda{% endblock %}
+
+{% block body %}
+    <div class="col-md-8 mx-auto mt-5">
+        <h1 class="text-center">Modifier</h1>
+        {{ include('agenda/_form.html.twig', {'button_label': 'Update'}) }}
+        <a class="btn btn-outline-secondary mt-1" href="{{ path('agenda_index') }}">Retour</a>
+        {{ include('agenda/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

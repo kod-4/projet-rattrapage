@@ -1,0 +1,26 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Conseil lecture{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center">Conseil de lecture</h1>
+    <div class="row">
+        {% for livre in livres %}
+            <div class="col-md-3 mb-2">
+                <a class="cart" href="{{ path('livre_detail', {'id': livre.id}) }}">
+                <div class="card">
+                    <img src="{{ asset('images/livres/' ~ livre.image) }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ livre.titre }}</h5>
+                        <p class="card-text"><b>Code : </b>{{ livre.code }}</p>
+                        <p class="card-text price">{{ livre.prix }} €</p>
+                    </div>
+                </div>
+                </a>
+            </div>
+        {% endfor %}
+        {{ knp_pagination_render(livres) }}
+    </div>
+</div>
+{% endblock %}

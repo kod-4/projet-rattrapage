@@ -1,0 +1,48 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Panier!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Mon Panier</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>produit</th>
+                    <th>Nombre</th>
+                    <th>Prix</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for donnee in donnees %}
+                    <tr>
+                        <td>{{ donnee.livre.titre }}</td>
+                        <td>{{ donnee.quantite }}</td>
+                        <td>{{ donnee.livre.prix }} €</td>
+                        <td>{{ donnee.quantite * donnee.livre.prix }} €</td>
+                        <td>
+                            <div class="d-flex">
+                                <a class="me-1" href="{{ path('add', {id: donnee.livre.id}) }}"><i class="fas fa-plus-circle"></i></a>
+                                <a class="link-warning me-1" href="{{ path('remove', {id: donnee.livre.id}) }}"><i class="fas fa-minus-square"></i></a>
+                                <a class="link-danger" href="{{ path('delete', {id: donnee.livre.id}) }}"><i class="fas fa-window-close"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-danger text-center">Votre panier est vide</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">Total</td>
+                    <td>{{ total }}</td>
+                    <td><a href="{{ path('void') }}" class="btn btn-outline-danger">Vider le panier</a></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+{% endblock %}

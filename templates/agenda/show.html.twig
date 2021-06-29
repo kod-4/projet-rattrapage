@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agenda{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center">Agenda</h1>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ agenda.id }}</td>
+            </tr>
+            <tr>
+                <th>Sujet</th>
+                <td>{{ agenda.sujet }}</td>
+            </tr>
+            <tr>
+                <th>Debut</th>
+                <td>{{ agenda.debut ? agenda.debut|date('Y-m-d H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fin</th>
+                <td>{{ agenda.fin ? agenda.fin|date('Y-m-d H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ agenda.description }}</td>
+            </tr>
+            <tr>
+                <th>Journee</th>
+                <td>{{ agenda.journee ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ asset('images/agenda/' ~ agenda.image) }}" alt="{{ agenda.sujet }}" class="img-list"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-secondary my-2" href="{{ path('agenda_index') }}">Retour</a>
+    <a class="btn btn-outline-primary" href="{{ path('agenda_edit', {'id': agenda.id}) }}"><i class="far fa-edit"></i></a>
+    {{ include('agenda/_delete_form.html.twig') }}
+</div>
+{% endblock %}
